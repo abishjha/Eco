@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "672381600461",
+    "firebase_url": "https://ecofirebaseproject-eceea.firebaseio.com",
+    "project_id": "ecofirebaseproject-eceea",
+    "storage_bucket": "ecofirebaseproject-eceea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672381600461:android:b01e2dbf2c417f40",
+        "android_client_info": {
+          "package_name": "edu.ramapo.ajha.eco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672381600461-2l99637i0ps2lc32al1c8lu6jsg7j51l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.ramapo.ajha.eco",
+            "certificate_hash": "897673e4e242de694df4e56389e85e546651a351"
+          }
+        },
+        {
+          "client_id": "672381600461-61gbl1gh9soc5k8hfv1l8nkbpbvjvp61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD77zE6xgabfcQqfJy1qKszpD5H1EeDLyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672381600461-61gbl1gh9soc5k8hfv1l8nkbpbvjvp61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
