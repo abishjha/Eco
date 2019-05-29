@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 /***
  * This activity class takes in a unique identifier for the data in the table,
@@ -30,6 +31,11 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        // get the docID passed in from the fragment handler.  docID is used to get content from the database
+        /*** may also need the database path instance or the title of the fragment from which to extra the docID data
+         * if not may have to restructure database to store all the contents in the same route regardless of section **/
+        ((TextView) findViewById(R.id.text_docID)).setText(getIntent().getStringExtra("docID"));
     }
 
     @Override

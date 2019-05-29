@@ -68,7 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        HashMap currItem = mDataset.get(position);
+        final HashMap currItem = mDataset.get(position);
         holder.textViewTitle.setText((String) currItem.get("title"));
         holder.textViewAuthor.setText((String) currItem.get("author"));
         holder.textViewTime.setText((String) currItem.get("time"));
@@ -78,10 +78,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public void onClick(View view) {
                 Toast.makeText(view.getContext(),"Card clicked at pos: " + position,Toast.LENGTH_SHORT).show();
 
-                // proceed to the home activity screen i.e. the main screen of the app
+                // proceed to the detail activity screen i.e. the screen for individual items
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
 
                 // include the data point unique identifier for the next activity
+                intent.putExtra("docID", ((String) currItem.get("docID")));
 
                 ((Activity) view.getContext()).startActivityForResult(intent, 0);
             }
