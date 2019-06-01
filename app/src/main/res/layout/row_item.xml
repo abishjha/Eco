@@ -10,8 +10,8 @@
     android:layout_marginTop="@dimen/margin_medium"
     android:layout_marginEnd="@dimen/margin_medium"
     android:layout_marginBottom="@dimen/margin_medium"
-    app:cardBackgroundColor="#81C784"
-    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#78B478"
+    app:cardCornerRadius="5dp"
     app:cardElevation="3dp"
     app:contentPadding="@dimen/margin_medium">
 
@@ -28,13 +28,12 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="top"
+            android:lines="2"
             android:paddingStart="@dimen/margin_medium"
             android:paddingTop="@dimen/margin_medium"
             android:paddingEnd="@dimen/margin_medium"
             android:paddingBottom="@dimen/margin_medium"
-            android:lines="2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,6 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.70"
+                android:alpha="0.80"
                 android:ellipsize="middle"
                 android:gravity="start"
                 android:paddingStart="@dimen/margin_medium"
@@ -54,20 +54,23 @@
                 android:paddingEnd="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_medium"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/text_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.30"
+                android:alpha="0.80"
                 android:gravity="end"
                 android:paddingStart="@dimen/margin_medium"
                 android:paddingTop="@dimen/margin_medium"
                 android:paddingEnd="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_medium"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="12sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
 
