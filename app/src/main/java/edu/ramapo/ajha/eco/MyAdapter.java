@@ -16,7 +16,10 @@ import java.util.Map;
 import java.util.Vector;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    private static final String TAG = "MyAdapter";
+
     private Vector<HashMap> mDataset;
+    private String mSection;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public View view;
@@ -38,8 +41,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(HashMap myDataset) {
+    public MyAdapter(HashMap myDataset, String section) {
         mDataset = new Vector<>();
+        mSection = section;
 
         if(myDataset == null)
             return;
@@ -50,7 +54,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Map.Entry pair = (Map.Entry) it.next();
             mDataset.add((HashMap) pair.getValue());
         }
-
     }
 
     // Create new views (invoked by the layout manager)
@@ -82,7 +85,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
 
                 // include the data point unique identifier for the next activity
+                intent.putExtra("section", mSection);
                 intent.putExtra("docID", ((String) currItem.get("docID")));
+                intent.putExtra("index", position);
 
                 ((Activity) view.getContext()).startActivityForResult(intent, 0);
             }

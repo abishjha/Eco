@@ -26,11 +26,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nova_oval"
                 android:text="@string/app_name"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_gravity="center" />
+                android:textSize="26sp" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -45,31 +47,31 @@
                 android:id="@+id/tabItem1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_ecological_awareness" />
+                android:text="@string/title_ecological_awareness" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_events" />
+                android:text="@string/title_events" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_stories" />
+                android:text="@string/title_stories" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_discussion" />
+                android:text="@string/title_discussion" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabItem5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_petitions" />
+                android:text="@string/title_petitions" />
 
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>

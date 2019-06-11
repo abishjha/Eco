@@ -35,6 +35,8 @@ import java.util.Vector;
  * create an instance of this fragment.
  */
 public class EventsFragment extends Fragment {
+    private static final String TAG = "EventsFragment";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String THIS_FRAGMENT_TITLE = "title";

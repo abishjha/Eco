@@ -6,6 +6,7 @@
     <dimen name="appbar_padding_top">1dp</dimen>
     <dimen name="list_item_height">100dp</dimen>
     <dimen name="margin_medium">5dp</dimen>
+    <dimen name="margin_big">12dp</dimen>
 
 
 </resources>

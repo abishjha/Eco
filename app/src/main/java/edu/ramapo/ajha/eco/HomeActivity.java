@@ -20,17 +20,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
-
-import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final String TAG = "HomeActivity";
 
     /**
      * The {@link androidx.viewpager.widget.PagerAdapter} that will provide
@@ -64,6 +59,19 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        // Listener to show the correct fab on each tab change
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                //showRightFab(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -71,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        // setting up the floating button on the bottom of the HomeActivity
+        // Setting up the floating button on the bottom of the HomeActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +89,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Show the right floating action button (fab)
+        //showRightFab(mViewPager.getCurrentItem());
     }
 
     @Override
@@ -105,9 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -135,19 +143,19 @@ public class HomeActivity extends AppCompatActivity {
             String currFragment;
             switch(position){
                 case 0:
-                    currFragment = getResources().getString(R.string.fragment_ecological_awareness);
+                    currFragment = getResources().getString(R.string.section_ecological_awareness);
                     break;
                 case 1:
-                    currFragment = getResources().getString(R.string.fragment_events);
+                    currFragment = getResources().getString(R.string.section_events);
                     break;
                 case 2:
-                    currFragment = getResources().getString(R.string.fragment_stories);
+                    currFragment = getResources().getString(R.string.section_stories);
                     break;
                 case 3:
-                    currFragment = getResources().getString(R.string.fragment_discussion);
+                    currFragment = getResources().getString(R.string.section_discussion);
                     break;
                 case 4:
-                    currFragment = getResources().getString(R.string.fragment_petitions);
+                    currFragment = getResources().getString(R.string.section_petitions);
                     break;
                 default:
                     return new Fragment();
@@ -162,6 +170,34 @@ public class HomeActivity extends AppCompatActivity {
             return 5;
         }
     }
+
+    /*
+    public void showRightFab(int tab) {
+        switch (tab) {
+            case 0:
+                fab2.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                    @Override
+                    public void onHidden(FloatingActionButton fab) {
+                        fab1.show();
+                    }
+                });
+                break;
+
+            case 1:
+                fab1.hide(new FloatingActionButton.OnVisibilityChangedListener() [
+                    @Override
+                    public void onHidden(FloatingActionButton fab) {
+                        fab2.show();
+                    }
+                });
+                break;
+
+        default:
+            fab1.hide();
+            fab2.hide();
+            break;
+    }
+}*/
 
     private void signOut() {
         mGoogleSignInClient.signOut()

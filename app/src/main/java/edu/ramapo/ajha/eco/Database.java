@@ -1,5 +1,6 @@
 package edu.ramapo.ajha.eco;
 
+import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
@@ -13,23 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
 
-public class Database {
-
-    public final static String DB_USERS = "users";
-    public final static String DB_ECO = "ecological_awareness";
-    public final static String DB_EVENTS = "events";
-    public final static String DB_STORIES = "stories";
-    public final static String DB_DISCUSSION = "discussion";
-    public final static String DB_PETITIONS = "petitions";
+public class Database{
+    private static final String TAG = "Database";
 
     private static DatabaseReference mDatabase;
 
     // initializes and/or resets the mDatabase reference to the top of the JSON tree
-    public static void init(){
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        // use this to clear the database of all objects
-        //mDatabase.setValue(null);
+    private static void init(){
+        if(mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            Log.w(TAG, "connected to database");
+        }
     }
 
     // checks if a user is present in the app database, if not, adds the user
@@ -37,7 +32,7 @@ public class Database {
         init();
 
         // code to register user
-        final DatabaseReference users = mDatabase.child(DB_USERS);
+        final DatabaseReference users = mDatabase.child(AppContext.getContext().getString(R.string.db_users));
 
         if(account.getId() != null) {
             users.child(account.getId())
@@ -45,9 +40,9 @@ public class Database {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                System.out.println("user exists " + account.getDisplayName());
+                                Log.w(TAG, "user exists " + account.getDisplayName());
                             } else {
-                                System.out.println("adding user " + account.getDisplayName());
+                                Log.w(TAG, "adding user " + account.getDisplayName());
 
                                 users.child(account.getId()).child("name").setValue(account.getDisplayName());
                                 users.child(account.getId()).child("email").setValue(account.getEmail());
@@ -58,52 +53,48 @@ public class Database {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            System.out.println("[REGISTER_USER] DB operation cancelled");
+                            Log.w(TAG, "[REGISTER_USER] DB operation cancelled");
                         }
                     });
         }
     }
 
-    public static String fragmentToDatabaseURLMap(String fragmentName){
-        String url = "";
-
-        switch(fragmentName){
-            case "Ecological Awareness":
-                url = DB_ECO;
-                break;
-            case "Events":
-                url = DB_EVENTS;
-                break;
-            case "Stories":
-                url = DB_STORIES;
-                break;
-            case "Discussion":
-                url = DB_DISCUSSION;
-                break;
-            case "Petitions":
-                url = DB_PETITIONS;
-                break;
-        }
-
-        return url;
-    }
-
-    public static void getMetaData(String fragmentName, final RecyclerView recyclerView){
+    public static void getMetaData(final String section, final RecyclerView recyclerView){
         init();
 
-        DatabaseReference newRef = mDatabase.child(fragmentToDatabaseURLMap(fragmentName)).child("meta-data");
+        DatabaseReference newRef = mDatabase.child(section).child("meta-data");
 
         newRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("[GET DATA] data extracted from DB");
+                Log.w(TAG, "[GET DATA] data extracted from DB");
 
-                recyclerView.setAdapter(new MyAdapter((HashMap) dataSnapshot.getValue()));
+                recyclerView.setAdapter(new MyAdapter((HashMap) dataSnapshot.getValue(), section));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("[GET DATA] DB operation cancelled");
+                Log.w(TAG, "[GET DATA] DB operation cancelled");
+            }
+        });
+    }
+
+    public static void getDetailedData(String section, String docID, final DetailActivity viewActivity){
+        init();
+
+        DatabaseReference newRef = mDatabase.child(section).child("content").child(docID);
+
+        newRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.w(TAG, "[GET DATA] data extracted from DB");
+
+                viewActivity.setData((HashMap) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "[GET DATA] DB operation cancelled");
             }
         });
     }
@@ -113,21 +104,21 @@ public class Database {
         init();
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            System.out.println("[DEBUG] data found in DB");
-                            System.out.println(dataSnapshot.getValue());
-                        }
-                        else{
-                            System.out.println("[DEBUG] data not found in DB");
-                        }
-                    }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Log.w(TAG, "[DEBUG] data found in DB.  printing...");
+                    System.out.println(dataSnapshot.getValue());
+                }
+                else{
+                    Log.w(TAG, "[DEBUG] data not found in DB");
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("[DEBUG] DB operation cancelled");
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "[DEBUG] DB operation cancelled");
+            }
+        });
     }
 }

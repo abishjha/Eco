@@ -3,10 +3,11 @@
     package="edu.ramapo.ajha.eco">
 
     <application
+        android:name=".AppContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/eco_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/eco_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -16,6 +17,7 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -24,12 +26,16 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:parentActivityName=".SignInActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
             android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
