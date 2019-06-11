@@ -79,8 +79,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Card clicked at pos: " + position,Toast.LENGTH_SHORT).show();
-
                 // proceed to the detail activity screen i.e. the screen for individual items
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
 

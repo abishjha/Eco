@@ -91,28 +91,16 @@ public class DetailActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title_detail_activity);
         TextView author = (TextView) findViewById(R.id.author_detail_activity);
         TextView time = (TextView) findViewById(R.id.time_detail_activity);
+        TextView content = (TextView) findViewById(R.id.content_detail_activity);
 
         title.setText((String) mData.get("title"));
-        author.setText("By " + mData.get("author"));
+
+        String authorText = "By " + (String) mData.get("author");
+        author.setText(authorText);
+
         time.setText((String) mData.get("time"));
 
-
-
-        /*
-        String s = "";
-
-        Iterator it = mData.entrySet().iterator();
-
-        while(it.hasNext()){
-            Map.Entry pair = (Map.Entry) it.next();
-            s += pair.getValue() + "\n";
-        }
-
-        //Iterator it = mData.entrySet().iterator();
-        //HashMap.Entry pair = (HashMap.Entry) it;
-        System.out.println("printed from show data in DetailActivity");
-        System.out.println(s);
-        System.out.println(" printed from show data in DetailActivity"); */
+        content.setText((String) mData.get("content"));
     }
 
     @Override
