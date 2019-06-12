@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -78,19 +79,6 @@ public class HomeActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        // Setting up the floating button on the bottom of the HomeActivity
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        // Show the right floating action button (fab)
-        //showRightFab(mViewPager.getCurrentItem());
     }
 
     @Override
@@ -128,6 +116,44 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void newItemFabOnClick(View view){
+        int tabIndex = mViewPager.getCurrentItem();
+
+        // proceed to the add item activity screen
+        Intent intent = new Intent(view.getContext(), AddItemActivity.class);
+
+        // include the data point unique identifier for the next activity
+        intent.putExtra("section", indexToNameFragmentMap(tabIndex));
+
+        ((Activity) view.getContext()).startActivityForResult(intent, 0);
+
+        // Snackbar.make(view, indexToNameFragmentMap(tabIndex), Snackbar.LENGTH_LONG)
+        //        .setAction("Action", null).show();
+    }
+
+    public String indexToNameFragmentMap(int index){
+        String currFragment = "";
+        switch(index){
+            case 0:
+                currFragment = getResources().getString(R.string.section_ecological_awareness);
+                break;
+            case 1:
+                currFragment = getResources().getString(R.string.section_events);
+                break;
+            case 2:
+                currFragment = getResources().getString(R.string.section_stories);
+                break;
+            case 3:
+                currFragment = getResources().getString(R.string.section_discussion);
+                break;
+            case 4:
+                currFragment = getResources().getString(R.string.section_petitions);
+                break;
+        }
+        return currFragment;
+    }
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -140,28 +166,8 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            String currFragment;
-            switch(position){
-                case 0:
-                    currFragment = getResources().getString(R.string.section_ecological_awareness);
-                    break;
-                case 1:
-                    currFragment = getResources().getString(R.string.section_events);
-                    break;
-                case 2:
-                    currFragment = getResources().getString(R.string.section_stories);
-                    break;
-                case 3:
-                    currFragment = getResources().getString(R.string.section_discussion);
-                    break;
-                case 4:
-                    currFragment = getResources().getString(R.string.section_petitions);
-                    break;
-                default:
-                    return new Fragment();
-            }
-
-            return EventsFragment.newInstance(currFragment);
+            String currFragment = indexToNameFragmentMap(position);
+            return DisplayListFragment.newInstance(currFragment);
         }
 
         @Override
@@ -170,34 +176,6 @@ public class HomeActivity extends AppCompatActivity {
             return 5;
         }
     }
-
-    /*
-    public void showRightFab(int tab) {
-        switch (tab) {
-            case 0:
-                fab2.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                    @Override
-                    public void onHidden(FloatingActionButton fab) {
-                        fab1.show();
-                    }
-                });
-                break;
-
-            case 1:
-                fab1.hide(new FloatingActionButton.OnVisibilityChangedListener() [
-                    @Override
-                    public void onHidden(FloatingActionButton fab) {
-                        fab2.show();
-                    }
-                });
-                break;
-
-        default:
-            fab1.hide();
-            fab2.hide();
-            break;
-    }
-}*/
 
     private void signOut() {
         mGoogleSignInClient.signOut()

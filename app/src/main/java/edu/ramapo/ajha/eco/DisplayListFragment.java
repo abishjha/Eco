@@ -2,40 +2,21 @@ package edu.ramapo.ajha.eco;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Vector;
 
 
 /**
  * FOR NOW USING ONE FRAGMENT CLASS FOR ALL THE FRAGMENTS TO REDUCE COMPLEXITY
  */
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * { EventsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EventsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class EventsFragment extends Fragment {
-    private static final String TAG = "EventsFragment";
+public class DisplayListFragment extends Fragment {
+    private static final String TAG = "DisplayListFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +30,7 @@ public class EventsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public EventsFragment() {
+    public DisplayListFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +39,11 @@ public class EventsFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param fragmentTitle Parameter 1.
-     * @return A new instance of fragment EventsFragment.
+     * @return A new instance of fragment DisplayListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EventsFragment newInstance(String fragmentTitle) {
-        EventsFragment fragment = new EventsFragment();
+    public static DisplayListFragment newInstance(String fragmentTitle) {
+        DisplayListFragment fragment = new DisplayListFragment();
         Bundle args = new Bundle();
         // inserting into the bundle as key-value pair so data can be retrieved using the key
         args.putString(THIS_FRAGMENT_TITLE, fragmentTitle);

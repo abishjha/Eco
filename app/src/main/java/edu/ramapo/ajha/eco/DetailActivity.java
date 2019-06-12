@@ -4,24 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /***
  * This activity class takes in a unique identifier for the data in the table,
  * downloads the content from the database and displays it on the screen
- *
- * TODO: do this --> set the title of the activity as the title of the event
- *               --> set a back button on the the title bar -- DONE
- *               --> make the title auto scroll if it does not fit into view
- *               --> content on the page
  */
 
 public class DetailActivity extends AppCompatActivity {
@@ -34,19 +24,19 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        String section = getIntent().getStringExtra("section");
-        String docID = getIntent().getStringExtra("docID");
-        int index = getIntent().getIntExtra("index", 0);
-
         /** set up the action bar */
-        Toolbar mActionBar = (Toolbar) findViewById(R.id.toolbar_detail_activity);
-        setSupportActionBar(mActionBar);
+        Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar_detail_activity);
+        setSupportActionBar(actionBar);
 
-        if(mActionBar != null) {
+        if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
+        String section = getIntent().getStringExtra("section");
+        String docID = getIntent().getStringExtra("docID");
+        int index = getIntent().getIntExtra("index", 0);
 
         setTitle(section, index);
 
@@ -54,15 +44,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setTitle(String section, int index){
-        TextView mSection = (TextView) findViewById(R.id.section_detail_activity);
+        TextView sectionTitle = (TextView) findViewById(R.id.section_detail_activity);
 
         // to convert from 0 based index to 1 based index
         index = index + 1;
         String titleText = getSectionDisplay(section) + " #" + index;
-        mSection.setText(titleText);
+        sectionTitle.setText(titleText);
 
         // select so that marquee can be activated if needed
-        mSection.setSelected(true);
+        sectionTitle.setSelected(true);
     }
 
     private String getSectionDisplay(String section){

@@ -11,6 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddItemActivity"
+            android:label="@string/title_activity_add_item"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ramapo.ajha.eco.HomeActivity" />
+        </activity>
+        <activity
             android:name=".SignInActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -31,7 +40,11 @@
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
             android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ramapo.ajha.eco.HomeActivity" />
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

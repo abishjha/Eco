@@ -46,7 +46,6 @@ public class Database{
 
                                 users.child(account.getId()).child("name").setValue(account.getDisplayName());
                                 users.child(account.getId()).child("email").setValue(account.getEmail());
-                                users.child(account.getId()).child("idToken").setValue(account.getIdToken());
                                 //users.child(account.getId()).child("photo").setValue(account.getPhotoUrl());
                             }
                         }

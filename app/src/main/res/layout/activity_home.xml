@@ -86,11 +86,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/new_item_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:backgroundTint="#CC7BE099"
+        android:onClick="newItemFabOnClick"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/baseline_add_black_36dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
