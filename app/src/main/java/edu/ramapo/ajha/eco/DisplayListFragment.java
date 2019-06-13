@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
+/*
  * FOR NOW USING ONE FRAGMENT CLASS FOR ALL THE FRAGMENTS TO REDUCE COMPLEXITY
  */
 
@@ -34,15 +34,7 @@ public class DisplayListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param fragmentTitle Parameter 1.
-     * @return A new instance of fragment DisplayListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DisplayListFragment newInstance(String fragmentTitle) {
+    static DisplayListFragment newInstance(String fragmentTitle) {
         DisplayListFragment fragment = new DisplayListFragment();
         Bundle args = new Bundle();
         // inserting into the bundle as key-value pair so data can be retrieved using the key
@@ -63,7 +55,7 @@ public class DisplayListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_events, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.view_events);
+        mRecyclerView = rootView.findViewById(R.id.view_events);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -107,7 +99,7 @@ public class DisplayListFragment extends Fragment {
     }
 
 
-    /**
+    /*
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that

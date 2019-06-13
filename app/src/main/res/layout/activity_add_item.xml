@@ -118,16 +118,6 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/save_button_add_item_activity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="@string/save_button"
-                    android:onClick="saveButtonClick"
-                    android:src="@drawable/round_save_black_24dp" />
-
-                <ImageButton
                     android:id="@+id/cancel_button_add_item_activity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -136,6 +126,16 @@
                     android:contentDescription="@string/cancel_button"
                     android:onClick="cancelButtonClick"
                     android:src="@drawable/round_cancel_black_24dp" />
+
+                <ImageButton
+                    android:id="@+id/save_button_add_item_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.50"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/save_button"
+                    android:onClick="saveButtonClick"
+                    android:src="@drawable/round_save_black_24dp" />
 
             </LinearLayout>
 

@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Vector;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -21,37 +18,35 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Vector<HashMap> mDataset;
     private String mSection;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public View view;
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        View view;
 
         // each data item is just a string in this case
-        public TextView textViewTitle;
-        public TextView textViewAuthor;
-        public TextView textViewTime;
+        TextView mTextViewTitle;
+        TextView mTextViewAuthor;
+        TextView mTextViewTime;
 
-        public MyViewHolder(View v) {
+        MyViewHolder(View v) {
             super(v);
             this.view = v;
 
-            textViewTitle = (TextView) v.findViewById(R.id.text_title);
-            textViewAuthor = (TextView) v.findViewById(R.id.text_author);
-            textViewTime = (TextView) v.findViewById(R.id.text_time);
+            mTextViewTitle = v.findViewById(R.id.text_title);
+            mTextViewAuthor = v.findViewById(R.id.text_author);
+            mTextViewTime = v.findViewById(R.id.text_time);
         }
     }
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(HashMap myDataset, String section) {
+    MyAdapter(HashMap myDataset, String section) {
         mDataset = new Vector<>();
         mSection = section;
 
         if(myDataset == null)
             return;
 
-        Iterator it = myDataset.entrySet().iterator();
-
-        while(it.hasNext()){
-            Map.Entry pair = (Map.Entry) it.next();
+        for (Object o : myDataset.entrySet()) {
+            HashMap.Entry pair = (HashMap.Entry) o;
             mDataset.add((HashMap) pair.getValue());
         }
     }
@@ -72,9 +67,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - replace the contents of the view with that element
 
         final HashMap currItem = mDataset.get(position);
-        holder.textViewTitle.setText((String) currItem.get("title"));
-        holder.textViewAuthor.setText((String) currItem.get("author"));
-        holder.textViewTime.setText((String) currItem.get("time"));
+        holder.mTextViewTitle.setText((String) currItem.get("title"));
+        holder.mTextViewAuthor.setText((String) currItem.get("author"));
+        holder.mTextViewTime.setText((String) currItem.get("time"));
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override

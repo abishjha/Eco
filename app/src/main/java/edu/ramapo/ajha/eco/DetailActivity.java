@@ -24,8 +24,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        /** set up the action bar */
-        Toolbar actionBar = (Toolbar) findViewById(R.id.toolbar_detail_activity);
+        /* set up the action bar */
+        Toolbar actionBar = findViewById(R.id.toolbar_detail_activity);
         setSupportActionBar(actionBar);
 
         if(getSupportActionBar() != null) {
@@ -44,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setTitle(String section, int index){
-        TextView sectionTitle = (TextView) findViewById(R.id.section_detail_activity);
+        TextView sectionTitle = findViewById(R.id.section_detail_activity);
 
         // to convert from 0 based index to 1 based index
         index = index + 1;
@@ -78,14 +78,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void showData(){
-        TextView title = (TextView) findViewById(R.id.title_detail_activity);
-        TextView author = (TextView) findViewById(R.id.author_detail_activity);
-        TextView time = (TextView) findViewById(R.id.time_detail_activity);
-        TextView content = (TextView) findViewById(R.id.content_detail_activity);
+        TextView title = findViewById(R.id.title_detail_activity);
+        TextView author = findViewById(R.id.author_detail_activity);
+        TextView time = findViewById(R.id.time_detail_activity);
+        TextView content = findViewById(R.id.content_detail_activity);
 
         title.setText((String) mData.get("title"));
 
-        String authorText = "By " + (String) mData.get("author");
+        String authorText = "By " + mData.get("author");
         author.setText(authorText);
 
         time.setText((String) mData.get("time"));

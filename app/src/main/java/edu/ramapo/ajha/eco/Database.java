@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
 
-public class Database{
+class Database{
     private static final String TAG = "Database";
 
     private static DatabaseReference mDatabase;
+    private static GoogleSignInAccount mUserAccount;
 
     // initializes and/or resets the mDatabase reference to the top of the JSON tree
     private static void init(){
@@ -28,8 +29,10 @@ public class Database{
     }
 
     // checks if a user is present in the app database, if not, adds the user
-    public static void registerUser(final GoogleSignInAccount account){
+    static void registerUser(final GoogleSignInAccount account){
         init();
+
+        mUserAccount = account;
 
         // code to register user
         final DatabaseReference users = mDatabase.child(AppContext.getContext().getString(R.string.db_users));
@@ -52,13 +55,13 @@ public class Database{
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.w(TAG, "[REGISTER_USER] DB operation cancelled");
+                            Log.w(TAG, "register user operation cancelled");
                         }
                     });
         }
     }
 
-    public static void getMetaData(final String section, final RecyclerView recyclerView){
+    static void getMetaData(final String section, final RecyclerView recyclerView){
         init();
 
         DatabaseReference newRef = mDatabase.child(section).child("meta-data");
@@ -78,7 +81,7 @@ public class Database{
         });
     }
 
-    public static void getDetailedData(String section, String docID, final DetailActivity viewActivity){
+    static void getDetailedData(String section, String docID, final DetailActivity viewActivity){
         init();
 
         DatabaseReference newRef = mDatabase.child(section).child("content").child(docID);
@@ -99,7 +102,7 @@ public class Database{
     }
 
     // print the entire database for debug purposes
-    public static void printDB(){
+    static void printDB(){
         init();
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
