@@ -36,5 +36,7 @@
     <string name="content_input_header">Content</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
+    <string name="no_data_input">Must enter title and content to save</string>
+    <string name="db_insertion_successful">Data insertion into DB successful</string>
 
 </resources>

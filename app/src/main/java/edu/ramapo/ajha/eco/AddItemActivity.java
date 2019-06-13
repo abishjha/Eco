@@ -3,10 +3,12 @@ package edu.ramapo.ajha.eco;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class AddItemActivity extends AppCompatActivity {
 
+    private String mSection;
     private EditText mTitleEntry;
     private EditText mContentEntry;
 
@@ -34,14 +37,14 @@ public class AddItemActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        String section = getIntent().getStringExtra("section");
-        setTitle(section);
+        mSection = getIntent().getStringExtra("section");
+        setTitle();
     }
 
-    private void setTitle(String section){
+    private void setTitle(){
         TextView title = findViewById(R.id.title_add_item_activity);
 
-        String titleText = "Add item -> " + getSectionDisplay(section);
+        String titleText = "Add item -> " + getSectionDisplay(mSection);
         title.setText(titleText);
 
         // select so that marquee can be activated if needed
@@ -74,7 +77,14 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     public void saveButtonClick(View view){
+        if(mTitleEntry.getText().toString().isEmpty() || mContentEntry.getText().toString().isEmpty()) {
+            Toast.makeText(AddItemActivity.this, R.string.no_data_input, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        Database.insertData(mSection, mTitleEntry.getText().toString(), mContentEntry.getText().toString());
+        Toast.makeText(AddItemActivity.this, R.string.db_insertion_successful, Toast.LENGTH_SHORT).show();
+        this.finish();
     }
 
     public void cancelButtonClick(View view){

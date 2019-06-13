@@ -45,9 +45,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         // show toast if the user signed out
-        if(getIntent().getBooleanExtra("signOut", false)){
+        if(getIntent().getBooleanExtra("signOut", false))
             Toast.makeText(SignInActivity.this, R.string.signed_out, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
