@@ -3,6 +3,7 @@ package edu.ramapo.ajha.eco;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -10,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
@@ -23,12 +25,12 @@ class Database{
     private static DatabaseReference mDatabase;
     private static GoogleSignInAccount mUserAccount;
 
-    private static final String DB_KEY_AUTHOR = "author";
-    private static final String DB_KEY_AUTHORID = "authorID";
-    private static final String DB_KEY_CONTENT = "content";
-    private static final String DB_KEY_DOCID = "docID";
-    private static final String DB_KEY_TIME = "time";
-    private static final String DB_KEY_TITLE = "title";
+    static final String DB_KEY_AUTHOR = "author";
+    static final String DB_KEY_AUTHORID = "authorID";
+    static final String DB_KEY_CONTENT = "content";
+    static final String DB_KEY_DOCID = "docID";
+    static final String DB_KEY_TIME = "time";
+    static final String DB_KEY_TITLE = "title";
 
     private static final String DB_DOCUMENT_META_DATA = "meta-data";
     private static final String DB_DOCUMENT_CONTENT = "content";
@@ -80,17 +82,33 @@ class Database{
 
         DatabaseReference newRef = mDatabase.child(section).child(DB_DOCUMENT_META_DATA);
 
-        newRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.w(TAG, "[GET DATA] data extracted from DB");
+        final MyAdapter adapter = new MyAdapter(section);
+        recyclerView.setAdapter(adapter);
 
-                recyclerView.setAdapter(new MyAdapter((HashMap) dataSnapshot.getValue(), section));
+        newRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                adapter.addData((HashMap) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                adapter.changeData((HashMap) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                adapter.removeData((HashMap) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w(TAG, "[GET DATA] DB operation cancelled");
+
             }
         });
     }

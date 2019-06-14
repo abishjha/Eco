@@ -14,13 +14,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,23 +26,10 @@ import android.view.View;
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
-    /**
-     * The {@link androidx.viewpager.widget.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * androidx.fragment.app.FragmentStatePagerAdapter.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-     // The ViewPager that will host the section contents.
     private ViewPager mViewPager;
 
     private GoogleSignInClient mGoogleSignInClient;
-
-    /**** swipe stuff variable ****/
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +40,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        /**** swipe stuff lines ****/
-        mSwipeRefreshLayout = findViewById(R.id.pull_to_refresh_fragment);
-        setupSwipeRefreshListener();
 
         // Create the adapter that will return a fragment for each of the five
         // primary sections of the activity.
@@ -109,23 +90,6 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**** swipe stuff function ****/
-    void setupSwipeRefreshListener(){
-        mSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        Log.i(TAG, "onRefresh called from SwipeRefreshLayout");
-
-                        mSectionsPagerAdapter.notifyDataSetChanged();
-
-                        // indicator to remove the progress indicator and update the view contents
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }
-        );
-    }
-
     public void newItemFabOnClick(View view){
         int tabIndex = mViewPager.getCurrentItem();
 
@@ -164,10 +128,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+    // A FragmentPagerAdapter that returns a fragment corresponding to one of the tabs
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         SectionsPagerAdapter(FragmentManager fm) {

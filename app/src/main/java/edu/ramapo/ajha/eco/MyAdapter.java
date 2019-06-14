@@ -2,6 +2,7 @@ package edu.ramapo.ajha.eco;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +39,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    MyAdapter(HashMap myDataset, String section) {
-        mDataset = new Vector<>();
+    MyAdapter(String section) {
         mSection = section;
+        mDataset = new Vector<>();
+    }
 
+    void setDataset(HashMap myDataset){
         if(myDataset == null)
             return;
+
+        mDataset = new Vector<>();
 
         for (Object o : myDataset.entrySet()) {
             HashMap.Entry pair = (HashMap.Entry) o;
@@ -91,5 +96,36 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    // returns the index where the new data has been added
+    void addData(HashMap newEntry){
+        mDataset.add(0, newEntry);
+        this.notifyItemInserted(0);
+    }
+
+    // everything else could have changed but not the document id so we use that as reference
+    void changeData(HashMap editedEntry){
+        String documentID = editedEntry.get(Database.DB_KEY_DOCID).toString();
+
+        for(int i = 0; i < mDataset.size(); i++){
+            if(documentID.equals(mDataset.elementAt(i).get(Database.DB_KEY_DOCID).toString())) {
+                mDataset.set(i, editedEntry);
+                this.notifyItemChanged(i);
+                return;
+            }
+        }
+    }
+
+    void removeData(HashMap removeEntry){
+        String documentID = removeEntry.get(Database.DB_KEY_DOCID).toString();
+
+        for(int i = 0; i < mDataset.size(); i++){
+            if(documentID.equals(mDataset.elementAt(i).get(Database.DB_KEY_DOCID).toString())) {
+                mDataset.remove(i);
+                this.notifyItemRemoved(i);
+                return;
+            }
+        }
     }
 }
