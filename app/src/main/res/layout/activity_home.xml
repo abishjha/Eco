@@ -86,6 +86,7 @@
         android:paddingBottom="@dimen/margin_medium"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!-- for fab :: android:backgroundTint="#7BE099" -->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_item_fab"
@@ -93,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="#CC7BE099"
+        android:backgroundTint="#77FFA0"
         android:onClick="newItemFabOnClick"
         app:fabSize="normal"
         app:srcCompat="@drawable/baseline_add_black_36dp" />

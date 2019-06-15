@@ -5,6 +5,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Create the adapter that will return a fragment for each of the five
@@ -81,16 +82,15 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.action_signout){
+            proceedToSettingsActivity();
+        } else if (id == R.id.action_signout) {
             signOut();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void newItemFabOnClick(View view){
+    public void newItemFabOnClick(View view) {
         int tabIndex = mViewPager.getCurrentItem();
 
         // proceed to the add item activity screen
@@ -105,9 +105,9 @@ public class HomeActivity extends AppCompatActivity {
         //        .setAction("Action", null).show();
     }
 
-    public String indexToNameFragmentMap(int index){
+    public String indexToNameFragmentMap(int index) {
         String currFragment = "";
-        switch(index){
+        switch (index) {
             case 0:
                 currFragment = getResources().getString(R.string.section_ecological_awareness);
                 break;
@@ -158,13 +158,18 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
-    private void proceedToSignInActivity(){
+    private void proceedToSignInActivity() {
         // close current activity
         this.finish();
 
         // proceed to the home activity screen i.e. the main screen of the app
         Intent intent = new Intent(this, SignInActivity.class);
         intent.putExtra("signOut", true);
+        startActivity(intent);
+    }
+
+    private void proceedToSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 }

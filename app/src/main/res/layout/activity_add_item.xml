@@ -52,7 +52,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_header_add_item_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
@@ -75,14 +74,15 @@
                 android:layout_marginBottom="@dimen/margin_big"
                 android:autofillHints="@string/title_input_header"
                 android:backgroundTint="#CC7BE099"
-                android:ellipsize="middle"
+                android:gravity="start|top"
                 android:inputType="textAutoCorrect|textMultiLine"
-                android:textCursorDrawable="@drawable/custom_cursor"
+                android:lineSpacingMultiplier="1.25"
+                android:minLines="2"
                 android:textColor="#FF000000"
+                android:textCursorDrawable="@drawable/custom_cursor"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/content_header_add_item_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
@@ -97,18 +97,81 @@
 
             <EditText
                 android:id="@+id/content_input_add_item_activity"
-                android:backgroundTint="#CC7BE099"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginEnd="@dimen/margin_big"
-                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_big"
                 android:autofillHints="@string/content_input_header"
+                android:backgroundTint="#CC7BE099"
+                android:gravity="start|top"
                 android:inputType="textAutoCorrect|textMultiLine"
-                android:textCursorDrawable="@drawable/custom_cursor"
+                android:lineSpacingMultiplier="1.25"
+                android:minLines="6"
                 android:textColor="#FF000000"
+                android:textCursorDrawable="@drawable/custom_cursor"
                 android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_big"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:text="@string/author_header"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp"
+                    android:labelFor="@+id/author_add_item_activity"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/author_add_item_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_big"
+                    android:textColor="#FF000000"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_big"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_big"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:text="@string/time_header"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp"
+                    android:labelFor="@+id/time_add_item_activity"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/time_add_item_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_big"
+                    android:textColor="#FF000000"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

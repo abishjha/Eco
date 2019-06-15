@@ -2,7 +2,6 @@ package edu.ramapo.ajha.eco;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +36,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-
-    // Provide a suitable constructor (depends on the kind of dataset)
     MyAdapter(String section) {
         mSection = section;
         mDataset = new Vector<>();

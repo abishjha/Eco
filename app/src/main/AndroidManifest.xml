@@ -32,6 +32,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ramapo.ajha.eco.HomeActivity" />
+        </activity>
+        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:parentActivityName=".SignInActivity"

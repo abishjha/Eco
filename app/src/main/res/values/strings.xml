@@ -9,6 +9,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_add_item">AddItemActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Display titles for the sections/fragments -->
     <string name="title_ecological_awareness">Ecological Awareness</string>
@@ -32,11 +33,19 @@
     <string name="db_users">users</string>
 
     <!-- Input prompts and buttons for the AddItemActivity -->
+    <string name="author_header">Author</string>
+    <string name="time_header">Date</string>
     <string name="title_input_header">Title</string>
     <string name="content_input_header">Content</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="no_data_input">Must enter title and content to save</string>
-    <string name="db_insertion_successful">Data insertion into DB successful</string>
+    <string name="db_insertion_successful">Post published successfully</string>
+
+    <!-- SettingsActivity -->
+    <string name="settings_activity_header">Settings</string>
+    <string name="settings_activity_name">Display Name</string>
+    <string name="settings_activity_email">Email</string>
+    <string name="settings_activity_photo">Profile Picture</string>
 
 </resources>

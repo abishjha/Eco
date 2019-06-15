@@ -3,7 +3,6 @@ package edu.ramapo.ajha.eco;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -39,6 +38,9 @@ public class AddItemActivity extends AppCompatActivity {
 
         mSection = getIntent().getStringExtra("section");
         setTitle();
+
+        ((TextView) findViewById(R.id.author_add_item_activity)).setText(Database.getCurrentUserName());
+        ((TextView) findViewById(R.id.time_add_item_activity)).setText(Database.getTodaysDate());
     }
 
     private void setTitle(){

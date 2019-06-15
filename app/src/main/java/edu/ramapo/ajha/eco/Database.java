@@ -1,6 +1,7 @@
 package edu.ramapo.ajha.eco;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.ChildEventListener;
@@ -76,6 +77,30 @@ class Database{
                     });
         }
     }
+
+    static String getCurrentUserName(){
+        return mUserAccount.getDisplayName();
+    }
+
+    static String getCurrentUserID(){
+        return mUserAccount.getId();
+    }
+
+    static String getCurrentUserPhoto(){
+        return mUserAccount.getPhotoUrl().toString();
+    }
+
+    static String getCurrentUserEmail(){
+        return mUserAccount.getEmail();
+    }
+
+    /*
+    static String getDisplayName(String accountID, final TextView displayView){
+        init();
+
+        DatabaseReference newRef = mDatabase.child(DB).child(DB_DOCUMENT_META_DATA);
+
+    } */
 
     static void getMetaData(final String section, final RecyclerView recyclerView){
         init();
@@ -178,10 +203,19 @@ class Database{
         return modifiedEntry;
     }
 
-    private static String getTodaysDate(){
+    static String getTodaysDate(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.now();
         return dtf.format(localDate);
+    }
+
+    static void deleteEntry(String section, String entryID){
+        init();
+
+        DatabaseReference sectionRef = mDatabase.child(section);
+
+        sectionRef.child(Database.DB_DOCUMENT_META_DATA).child(entryID).removeValue();
+        sectionRef.child(Database.DB_DOCUMENT_CONTENT).child(entryID).removeValue();
     }
 
     // print the entire database for debug purposes

@@ -1,10 +1,15 @@
 package edu.ramapo.ajha.eco;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -18,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "DetailActivity";
 
     private HashMap mData;
+    private String mSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +40,13 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        String section = getIntent().getStringExtra("section");
+        mSection = getIntent().getStringExtra("section");
         String docID = getIntent().getStringExtra("docID");
         int index = getIntent().getIntExtra("index", 0);
 
-        setTitle(section, index);
+        setTitle(mSection, index);
 
-        Database.getDetailedData(section, docID, this);
+        Database.getDetailedData(mSection, docID, this);
     }
 
     private void setTitle(String section, int index){
@@ -83,14 +89,28 @@ public class DetailActivity extends AppCompatActivity {
         TextView time = findViewById(R.id.time_detail_activity);
         TextView content = findViewById(R.id.content_detail_activity);
 
-        title.setText((String) mData.get("title"));
+        title.setText((String) mData.get(Database.DB_KEY_TITLE));
 
-        String authorText = "By " + mData.get("author");
+        String authorText = "By " + mData.get(Database.DB_KEY_AUTHOR);
+        if(Database.getCurrentUserID().equals(mData.get(Database.DB_KEY_AUTHORID)))
+            authorText += " (You)";
         author.setText(authorText);
 
-        time.setText((String) mData.get("time"));
+        time.setText((String) mData.get(Database.DB_KEY_TIME));
 
-        content.setText((String) mData.get("content"));
+        content.setText((String) mData.get(Database.DB_KEY_CONTENT));
+
+        // check to see if the author is the current user, if it is show the delete button
+        if(Database.getCurrentUserID().equals(mData.get(Database.DB_KEY_AUTHORID))){
+            ImageButton deleteButton = findViewById(R.id.delete_button_detail_activity);
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteAlertDialog();
+                }
+            });
+        }
     }
 
     @Override
@@ -101,5 +121,34 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void deleteAlertDialog(){
+        final Activity thisActivity = this;
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(thisActivity);
+        builder1.setMessage("Delete this " + getSectionDisplay(mSection) + " item?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Database.deleteEntry(mSection, (String) mData.get(Database.DB_KEY_DOCID));
+                        dialog.cancel();
+                        thisActivity.finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog deleteAlert = builder1.create();
+        deleteAlert.show();
     }
 }
