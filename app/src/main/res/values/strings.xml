@@ -47,7 +47,7 @@
     <string name="settings_activity_photo">Profile Picture</string>
     <string name="save_and_continue">Save and Continue</string>
     <string name="edit">Edit</string>
-    <string name="no_name_input_revert_to_previous">No name was entered so reverted changes</string>
+    <string name="no_name_input_revert_to_previous">Name smaller than 3 characters not allowed</string>
     <string name="name_changed">Display name has been changed</string>
 
 </resources>

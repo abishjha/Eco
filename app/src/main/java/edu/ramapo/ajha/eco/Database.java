@@ -20,6 +20,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**/
+/*
+Database class
+
+DESCRIPTION
+
+        This non-activity activity class is the endpoint for all the database communication.
+        This has been put in a separate file so the database can be changed if needed without
+        any/much change across other parts of the code.  This class communicates with the
+        Firebase database to performs operations such as inserting, editing, deleting, and
+        retrieving data.
+
+AUTHOR
+
+        Abish Jha
+
+DATE
+
+        06/15/2019
+
+*/
+/**/
 class Database{
     private static final String TAG = "Database";
 
@@ -41,7 +63,37 @@ class Database{
     private static final String DB_DOCUMENT_CONTENT = "content";
 
 
-    // initializes and/or resets the mDatabase reference to the top of the JSON tree
+    /**/
+    /*
+    init() init()
+
+    NAME
+
+            init - initializes the database reference if not initialized
+
+    SYNOPSIS
+
+            static void init();
+
+    DESCRIPTION
+
+            Checks if the database reference is initialized, if not initializes it to the root
+            of the database (which is a JSON tree) from where other references can traverse.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     private static void init(){
         if(mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -49,7 +101,40 @@ class Database{
         }
     }
 
-    // checks if a user is present in the app database, if not, adds the user
+
+    /**/
+    /*
+    registerUser() registerUser()
+
+    NAME
+
+            registerUser - register the passed in user to the database
+
+    SYNOPSIS
+
+            static void registerUser(final GoogleSignInAccount account);
+
+            account -> this is the account object provided by Google upon login
+
+    DESCRIPTION
+
+            Checks if the passed in user exists in the database, if not saves his/her info.  Also
+            save the instance as a class member for later usage as a static variable
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void registerUser(final GoogleSignInAccount account){
         init();
 
@@ -82,22 +167,186 @@ class Database{
         }
     }
 
+
+    /**/
+    /*
+    getCurrentUserRealName() getCurrentUserRealName()
+
+    NAME
+
+            getCurrentUserRealName - gets the Google provided name of the user
+
+    SYNOPSIS
+
+            static String getCurrentUserRealName();
+
+    DESCRIPTION
+
+            Every user has two names, one real name which is immutable by the user and the other
+            one which is the display name which can be changed by the user.  This function returns
+            the real name.
+
+    RETURNS
+
+            String with the real name of the user
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static String getCurrentUserRealName(){
         return mUserAccount.getDisplayName();
     }
 
+
+    /**/
+    /*
+    getCurrentUserID() getCurrentUserID()
+
+    NAME
+
+            getCurrentUserID - gets the Google provided ID of the user
+
+    SYNOPSIS
+
+            static String getCurrentUserID();
+
+    DESCRIPTION
+
+            Every user has a user id assigned by Google.  This functions return that user id and
+            is used when content is saved to reference back to the creator of the content.
+
+    RETURNS
+
+            String with the id of the user
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static String getCurrentUserID(){
         return mUserAccount.getId();
     }
 
+
+    /**/
+    /*
+    getCurrentUserPhoto() getCurrentUserPhoto()
+
+    NAME
+
+            getCurrentUserPhoto - gets the Google account photo URL of the user
+
+    SYNOPSIS
+
+            static String getCurrentUserPhoto();
+
+    DESCRIPTION
+
+            This functions gets the photo URL of the signed in user from Google.
+
+    RETURNS
+
+            String with the photo URL of the user
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static String getCurrentUserPhoto(){
         return mUserAccount.getPhotoUrl().toString();
     }
 
+
+    /**/
+    /*
+    getCurrentUserEmail() getCurrentUserEmail()
+
+    NAME
+
+            getCurrentUserEmail - gets the Google account email of the user
+
+    SYNOPSIS
+
+            static String getCurrentUserEmail();
+
+    DESCRIPTION
+
+            This functions gets the email that the user used to sign in to the app.
+
+    RETURNS
+
+            String with the email of the user
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static String getCurrentUserEmail(){
         return mUserAccount.getEmail();
     }
 
+
+    /**/
+    /*
+    appendDisplayName() appendDisplayName()
+
+    NAME
+
+            appendDisplayName - get the display name for the provided account id and appends to view
+
+    SYNOPSIS
+
+            static void appendDisplayName(final String accountID, final TextView displayView);
+
+            accountID -> a string containing the account id of the user whose name is to be
+                         extracted from the database
+            displayView -> once the data is extracted, the view to which the name should be appended
+                           to
+
+    DESCRIPTION
+
+            This functions gets the display name of the account from the database whose id is
+            provided and appends that display name to the displayView provided.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void appendDisplayName(final String accountID, final TextView displayView){
         init();
 
@@ -120,6 +369,40 @@ class Database{
         });
     }
 
+
+    /**/
+    /*
+    changeDisplayName() changeDisplayName()
+
+    NAME
+
+            changeDisplayName - changes the display name for the current user
+
+    SYNOPSIS
+
+            static void changeDisplayName(String newName);
+
+            newName -> the new name for the current user
+
+    DESCRIPTION
+
+            This function changes the display name for the current user to whatever is provided
+            as argument to the function.  The changes is made in the database's entry
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void changeDisplayName(String newName){
         init();
 
@@ -127,6 +410,42 @@ class Database{
                 .child(getCurrentUserID()).child(DB_KEY_NAME).setValue(newName);
     }
 
+
+    /**/
+    /*
+    getMetaData() getMetaData()
+
+    NAME
+
+            getMetaData - gets meta data from the database
+
+    SYNOPSIS
+
+            static void getMetaData(final String section, final RecyclerView recyclerView);
+
+            section -> the section for which to get the meta data
+            recyclerView -> the view to which to populate the retrieved meta data
+
+    DESCRIPTION
+
+            This function retrieves the meta data for the given section from the database and
+            populates the data into a custom adapter which is set as the adapter for the
+            recycler view on screen so the items can be displayed.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void getMetaData(final String section, final RecyclerView recyclerView){
         init();
 
@@ -163,6 +482,42 @@ class Database{
         });
     }
 
+
+    /**/
+    /*
+    getDetailedData() getDetailedData()
+
+    NAME
+
+            getDetailedData - gets detailed data for the provided entry
+
+    SYNOPSIS
+
+            static void getDetailedData(String section, String entryID, final DetailActivity viewActivity);
+
+            section -> the section that the entry belongs in
+            entryID -> the entry id for the entry whose content is to be extracted
+            viewActivity -> the view in which the data should be passed
+
+    DESCRIPTION
+
+            This function retrieves the detailed data for the given entry from the database and
+            populates the data into the supplied view's field so it can be displayed.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void getDetailedData(String section, String entryID, final DetailActivity viewActivity){
         init();
 
@@ -183,6 +538,42 @@ class Database{
         });
     }
 
+
+    /**/
+    /*
+    insertData() insertData()
+
+    NAME
+
+            insertData - insert data into the database
+
+    SYNOPSIS
+
+            static void insertData(String section, String title, String content);
+
+            section -> the section in which to insert data
+            title -> the title for the data to be inserted
+            content -> the content for the data to be inserted
+
+    DESCRIPTION
+
+            This function creates a HashMap from the title and content provided and invokes the
+            other insertData function which does the actual insertion into the database.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void insertData(String section, String title, String content){
         HashMap<String, String> entry = new HashMap<>();
         entry.put(DB_KEY_TITLE, title);
@@ -191,6 +582,41 @@ class Database{
         insertData(section, entry);
     }
 
+
+    /**/
+    /*
+    insertData() insertData()
+
+    NAME
+
+            insertData - insert data into the database
+
+    SYNOPSIS
+
+            static void insertData(String section, HashMap<String, String> entry);
+
+            section -> the section in which to insert data
+            entry -> the entry to be inserted
+
+    DESCRIPTION
+
+            This function breaks down the provided data into meta data and content section and
+            inserts the data in to the respective section in the database.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void insertData(String section, HashMap<String, String> entry){
         init();
 
@@ -211,6 +637,40 @@ class Database{
         contentDocument.child(entryID).setValue(contentEntry);
     }
 
+
+    /**/
+    /*
+    getMetaDataMap() getMetaDataMap()
+
+    NAME
+
+            getMetaDataMap - get the meta data entry
+
+    SYNOPSIS
+
+            static HashMap<String, String> getMetaDataMap(HashMap<String, String> entry)
+
+            entry -> the title and content of the entry to be inserted
+
+    DESCRIPTION
+
+            This function removes and adds the required data in to the provided HashMap and returns
+            a HashMap object that can be inserted into the meta data section.
+
+    RETURNS
+
+            A HashMap with the key-value pairs of data to be inserted in the meta data document.
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     private static HashMap<String, String> getMetaDataMap(HashMap<String, String> entry){
         HashMap<String, String> modifiedEntry = new HashMap<>(entry);
         modifiedEntry.remove(DB_KEY_CONTENT);
@@ -220,6 +680,40 @@ class Database{
         return modifiedEntry;
     }
 
+
+    /**/
+    /*
+    getContentMap() getContentMap()
+
+    NAME
+
+            getContentMap - get the content data entry
+
+    SYNOPSIS
+
+            static HashMap<String, String> getContentMap(HashMap<String, String> entry)
+
+            entry -> the title and content of the entry to be inserted
+
+    DESCRIPTION
+
+            This function removes and adds the required data in to the provided HashMap and returns
+            a HashMap object that can be inserted into the content section.
+
+    RETURNS
+
+            A HashMap with the key-value pairs of data to be inserted in the content document.
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     private static HashMap<String, String> getContentMap(HashMap<String, String> entry){
         HashMap<String, String> modifiedEntry = new HashMap<>(entry);
         modifiedEntry.put(DB_KEY_AUTHORID, getCurrentUserID());
@@ -227,16 +721,78 @@ class Database{
         return modifiedEntry;
     }
 
-    /**
-     *
-     * @return
-     */
+
+    /**/
+    /*
+    getTodaysDate() getTodaysDate()
+
+    NAME
+
+            getTodaysDate - get today's date
+
+    SYNOPSIS
+
+            static String getTodaysDate();
+
+    DESCRIPTION
+
+            This function gets today's date in the format YYYY/MM/DD.
+
+    RETURNS
+
+            A String with today's date.
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static String getTodaysDate(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.now();
         return dtf.format(localDate);
     }
 
+
+    /**/
+    /*
+    deleteEntry() deleteEntry()
+
+    NAME
+
+            deleteEntry - delete an entry from the database
+
+    SYNOPSIS
+
+            void deleteEntry(String section, String entryID)
+
+            section -> the section to delete the entry from
+            entryID -> the id of the entry to delete
+
+    DESCRIPTION
+
+            This function deletes the entry with the given id from the respective section in the
+            database.
+
+    RETURNS
+
+            void
+
+    AUTHOR
+
+            Abish Jha
+
+    DATE
+
+            06/15/2019
+
+    */
+    /**/
     static void deleteEntry(String section, String entryID){
         init();
 
@@ -244,28 +800,5 @@ class Database{
 
         sectionRef.child(Database.DB_DOCUMENT_META_DATA).child(entryID).removeValue();
         sectionRef.child(Database.DB_DOCUMENT_CONTENT).child(entryID).removeValue();
-    }
-
-    // print the entire database for debug purposes
-    static void printDB(){
-        init();
-
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    Log.w(TAG, "[DEBUG] data found in DB.  printing...");
-                    System.out.println(dataSnapshot.getValue());
-                }
-                else{
-                    Log.w(TAG, "[DEBUG] data not found in DB");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w(TAG, "[DEBUG] DB operation cancelled");
-            }
-        });
     }
 }
