@@ -62,7 +62,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:orientation="horizontal">
 
@@ -71,24 +71,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_big"
                     android:layout_marginEnd="@dimen/margin_medium"
-                    android:text="@string/settings_activity_name"
+                    android:text="@string/settings_activity_real_name"
                     android:textColor="#FF000000"
                     android:textSize="16sp"
                     android:labelFor="@+id/name_settings_activity"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/name_settings_activity"
+                <TextView
+                    android:id="@+id/real_name_settings_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_big"
-                    android:autofillHints="@string/settings_activity_name"
-                    android:backgroundTint="#CC7BE099"
-                    android:singleLine="true"
-                    android:inputType="textAutoCorrect|textMultiLine"
                     android:textColor="#FF000000"
-                    android:textCursorDrawable="@drawable/custom_cursor"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -121,6 +116,77 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin_big"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_big"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:labelFor="@+id/name_settings_activity"
+                    android:text="@string/settings_activity_name"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/name_settings_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_big"
+                    android:autofillHints="@string/settings_activity_name"
+                    android:backgroundTint="#CC7BE099"
+                    android:singleLine="true"
+                    android:textColor="#FF000000"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_button_settings_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_big"
+                android:paddingEnd="@dimen/margin_big"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_big"
+                android:background="@color/colorPrimary"
+                android:onClick="editClick"
+                android:text="@string/edit"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/save_and_continue_button_settings_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_big"
+                android:paddingEnd="@dimen/margin_big"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_big"
+                android:background="@color/colorPrimary"
+                android:onClick="saveAndContinueClick"
+                android:text="@string/save_and_continue"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 

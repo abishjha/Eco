@@ -39,7 +39,8 @@ public class AddItemActivity extends AppCompatActivity {
         mSection = getIntent().getStringExtra("section");
         setTitle();
 
-        ((TextView) findViewById(R.id.author_add_item_activity)).setText(Database.getCurrentUserName());
+        TextView author = findViewById(R.id.author_add_item_activity);
+        Database.appendDisplayName(Database.getCurrentUserID(), author);
         ((TextView) findViewById(R.id.time_add_item_activity)).setText(Database.getTodaysDate());
     }
 

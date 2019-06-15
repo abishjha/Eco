@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -52,9 +53,14 @@ public class DetailActivity extends AppCompatActivity {
     private void setTitle(String section, int index){
         TextView sectionTitle = findViewById(R.id.section_detail_activity);
 
+        String titleText = getSectionDisplay(section);
+
+        /*  the index gets invalidated when there is a change in the data elements
         // to convert from 0 based index to 1 based index
         index = index + 1;
-        String titleText = getSectionDisplay(section) + " #" + index;
+        titleText += " #" + index;
+        */
+
         sectionTitle.setText(titleText);
 
         // select so that marquee can be activated if needed
@@ -91,10 +97,9 @@ public class DetailActivity extends AppCompatActivity {
 
         title.setText((String) mData.get(Database.DB_KEY_TITLE));
 
-        String authorText = "By " + mData.get(Database.DB_KEY_AUTHOR);
-        if(Database.getCurrentUserID().equals(mData.get(Database.DB_KEY_AUTHORID)))
-            authorText += " (You)";
-        author.setText(authorText);
+        String authorTextPrefix = "By ";
+        author.setText(authorTextPrefix);
+        Database.appendDisplayName((String) mData.get(Database.DB_KEY_AUTHORID), author);
 
         time.setText((String) mData.get(Database.DB_KEY_TIME));
 

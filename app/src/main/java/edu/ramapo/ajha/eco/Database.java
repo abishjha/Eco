@@ -33,6 +33,10 @@ class Database{
     static final String DB_KEY_TIME = "time";
     static final String DB_KEY_TITLE = "title";
 
+    static final String DB_KEY_NAME = "name";
+    static final String DB_KEY_EMAIL = "email";
+    static final String DB_KEY_REAL_NAME = "real-name";
+
     private static final String DB_DOCUMENT_META_DATA = "meta-data";
     private static final String DB_DOCUMENT_CONTENT = "content";
 
@@ -64,9 +68,9 @@ class Database{
                             } else {
                                 Log.w(TAG, "adding user " + account.getDisplayName());
 
-                                users.child(account.getId()).child("name").setValue(account.getDisplayName());
-                                users.child(account.getId()).child("email").setValue(account.getEmail());
-                                //users.child(account.getId()).child("photo").setValue(account.getPhotoUrl());
+                                users.child(account.getId()).child(DB_KEY_NAME).setValue(account.getDisplayName());
+                                users.child(account.getId()).child(DB_KEY_REAL_NAME).setValue(account.getDisplayName());
+                                users.child(account.getId()).child(DB_KEY_EMAIL).setValue(account.getEmail());
                             }
                         }
 
@@ -78,7 +82,7 @@ class Database{
         }
     }
 
-    static String getCurrentUserName(){
+    static String getCurrentUserRealName(){
         return mUserAccount.getDisplayName();
     }
 
@@ -94,13 +98,34 @@ class Database{
         return mUserAccount.getEmail();
     }
 
-    /*
-    static String getDisplayName(String accountID, final TextView displayView){
+    static void appendDisplayName(final String accountID, final TextView displayView){
         init();
 
-        DatabaseReference newRef = mDatabase.child(DB).child(DB_DOCUMENT_META_DATA);
+        final DatabaseReference user = mDatabase.child(AppContext.getContext().getString(R.string.db_users)).child(accountID);
 
-    } */
+        user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    displayView.append((String) ((HashMap) dataSnapshot.getValue()).get(DB_KEY_NAME));
+                } else {
+                    displayView.append("null");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w(TAG, "find user operation cancelled");
+            }
+        });
+    }
+
+    static void changeDisplayName(String newName){
+        init();
+
+        mDatabase.child(AppContext.getContext().getString(R.string.db_users))
+                .child(getCurrentUserID()).child(DB_KEY_NAME).setValue(newName);
+    }
 
     static void getMetaData(final String section, final RecyclerView recyclerView){
         init();
@@ -190,15 +215,14 @@ class Database{
         HashMap<String, String> modifiedEntry = new HashMap<>(entry);
         modifiedEntry.remove(DB_KEY_CONTENT);
 
-        modifiedEntry.put(DB_KEY_AUTHOR, mUserAccount.getDisplayName());
+        modifiedEntry.put(DB_KEY_AUTHORID, getCurrentUserID());
         modifiedEntry.put(DB_KEY_TIME, getTodaysDate());
         return modifiedEntry;
     }
 
     private static HashMap<String, String> getContentMap(HashMap<String, String> entry){
         HashMap<String, String> modifiedEntry = new HashMap<>(entry);
-        modifiedEntry.put(DB_KEY_AUTHOR, mUserAccount.getDisplayName());
-        modifiedEntry.put(DB_KEY_AUTHORID, mUserAccount.getId());
+        modifiedEntry.put(DB_KEY_AUTHORID, getCurrentUserID());
         modifiedEntry.put(DB_KEY_TIME, getTodaysDate());
         return modifiedEntry;
     }

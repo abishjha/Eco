@@ -69,9 +69,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - replace the contents of the view with that element
 
         final HashMap currItem = mDataset.get(position);
-        holder.mTextViewTitle.setText((String) currItem.get("title"));
-        holder.mTextViewAuthor.setText((String) currItem.get("author"));
-        holder.mTextViewTime.setText((String) currItem.get("time"));
+        holder.mTextViewTitle.setText((String) currItem.get(Database.DB_KEY_TITLE));
+        Database.appendDisplayName((String) currItem.get(Database.DB_KEY_AUTHORID), holder.mTextViewAuthor);
+        holder.mTextViewTime.setText((String) currItem.get(Database.DB_KEY_TIME));
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
                 // include the data point unique identifier for the next activity
                 intent.putExtra("section", mSection);
-                intent.putExtra("docID", ((String) currItem.get("docID")));
+                intent.putExtra("docID", ((String) currItem.get(Database.DB_KEY_DOCID)));
                 intent.putExtra("index", position);
 
                 ((Activity) view.getContext()).startActivityForResult(intent, 0);
