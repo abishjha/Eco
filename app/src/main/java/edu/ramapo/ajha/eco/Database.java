@@ -26,7 +26,6 @@ class Database{
     private static DatabaseReference mDatabase;
     private static GoogleSignInAccount mUserAccount;
 
-    static final String DB_KEY_AUTHOR = "author";
     static final String DB_KEY_AUTHORID = "authorID";
     static final String DB_KEY_CONTENT = "content";
     static final String DB_KEY_DOCID = "docID";
@@ -37,6 +36,7 @@ class Database{
     static final String DB_KEY_EMAIL = "email";
     static final String DB_KEY_REAL_NAME = "real-name";
 
+    private static final String DB_DOCUMENT_USERS = "users";
     private static final String DB_DOCUMENT_META_DATA = "meta-data";
     private static final String DB_DOCUMENT_CONTENT = "content";
 
@@ -56,7 +56,7 @@ class Database{
         mUserAccount = account;
 
         // code to register user
-        final DatabaseReference users = mDatabase.child(AppContext.getContext().getString(R.string.db_users));
+        final DatabaseReference users = mDatabase.child(DB_DOCUMENT_USERS);
 
         if(account.getId() != null) {
             users.child(account.getId())
@@ -101,7 +101,7 @@ class Database{
     static void appendDisplayName(final String accountID, final TextView displayView){
         init();
 
-        final DatabaseReference user = mDatabase.child(AppContext.getContext().getString(R.string.db_users)).child(accountID);
+        final DatabaseReference user = mDatabase.child(DB_DOCUMENT_USERS).child(accountID);
 
         user.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -123,7 +123,7 @@ class Database{
     static void changeDisplayName(String newName){
         init();
 
-        mDatabase.child(AppContext.getContext().getString(R.string.db_users))
+        mDatabase.child(DB_DOCUMENT_USERS)
                 .child(getCurrentUserID()).child(DB_KEY_NAME).setValue(newName);
     }
 
@@ -227,6 +227,10 @@ class Database{
         return modifiedEntry;
     }
 
+    /**
+     *
+     * @return
+     */
     static String getTodaysDate(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.now();

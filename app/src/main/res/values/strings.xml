@@ -29,9 +29,6 @@
     <string name="section_discussion">discussion</string>
     <string name="section_petitions">petitions</string>
 
-    <!-- db path for the users table -->
-    <string name="db_users">users</string>
-
     <!-- Input prompts and buttons for the AddItemActivity -->
     <string name="author_header">Author</string>
     <string name="time_header">Date</string>
